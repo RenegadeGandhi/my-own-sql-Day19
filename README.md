@@ -1,5 +1,7 @@
 # my-own-sql-Day19
 
+Heroku Link: https://sqlthatismine.herokuapp.com/
+
 # DB Info
 host: "us-cdbr-east-06.cleardb.net",
 user: "bd5b486deb1c6f",
