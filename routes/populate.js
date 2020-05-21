@@ -8,8 +8,7 @@ router.get("/populate", (req, res) => {
     let sql = "CREATE TABLE users (id INT PRIMARY KEY, name VARCHAR(255), username VARCHAR(255), email VARCHAR(255))";  
     con.query(sql, function (err, result) {  
         if (err) throw err;  
-        console.log("Table created"); 
-        res.send("Table created") 
+        console.log("Table created");
     }); 
     fetch('http://jsonplaceholder.typicode.com/users')
     .then((u) => { 
@@ -22,9 +21,9 @@ router.get("/populate", (req, res) => {
             con.query(ins, post, (err, result) => {
                 if (err) throw err;
                 console.log(result);
-                res.send("users added")
             });
         }
+        res.send("Users added");
     })
 });
 
@@ -42,8 +41,8 @@ router.get("/deletetable", (req, res) => {
     con.query(sql, function (err, result) {
         if (err) throw err;
         console.log("Table deleted");
-        res.send("table deleted");
     });
+    res.send("table deleted");
 });
 
 

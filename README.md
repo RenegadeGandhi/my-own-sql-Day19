@@ -1,4 +1,5 @@
 # my-own-sql-Day19
+added /deletetable to drop table
 
 Heroku Link: https://sqlthatismine.herokuapp.com/
 
