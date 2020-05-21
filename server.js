@@ -4,7 +4,7 @@ const populateRoute = require("./routes/populate");
 
 const app = express();
 app.use(bodyParser.json());
-app.use("/populate", populateRoute);
+app.use("/", populateRoute);
 
 
 

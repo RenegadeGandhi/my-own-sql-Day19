@@ -4,23 +4,45 @@ const fetch = require("node-fetch");
 const con = require("../connection");
 
 
-router.get("/", (req, res) => {
+router.get("/populate", (req, res) => {
     let sql = "CREATE TABLE users (id INT PRIMARY KEY, name VARCHAR(255), username VARCHAR(255), email VARCHAR(255))";  
     con.query(sql, function (err, result) {  
         if (err) throw err;  
         console.log("Table created"); 
         res.send("Table created") 
+    }); 
+    fetch('http://jsonplaceholder.typicode.com/users')
+    .then((u) => { 
+        return u.json();
     })
-    .then((data) => {
-        fetch('http://jsonplaceholder.typicode.com/users')
+    .then((json) => {
+        for (let i = 0; i < json.length; i++) {
+            let post = {id: json[i].id, name: json[i].name, username: json[i].username, email: json[i].email};
+            let ins = "INSERT INTO users SET?";
+            con.query(ins, post, (err, result) => {
+                if (err) throw err;
+                console.log(result);
+                res.send("users added")
+            });
+        }
     })
 });
 
-router.get("/delete", () => {
+router.get("/delete", (req, res) => {
+    var del = "DELETE FROM users WHERE id = '10'";
+    con.query(del, function (err, result) {
+        if (err) throw err;
+        console.log("Number of records deleted: " + result.affectedRows);
+        res.send(("Number of records deleted: " + result.affectedRows));
+    });
+});
+
+router.get("/deletetable", (req, res) => {
     let sql = "DROP TABLE users";
     con.query(sql, function (err, result) {
         if (err) throw err;
         console.log("Table deleted");
+        res.send("table deleted");
     });
 });
 
@@ -28,15 +50,7 @@ router.get("/delete", () => {
 
 
 
-/*router.get("/", () => {
-    fetch('http://jsonplaceholder.typicode.com/users')
-    .then(function(response){
-        return response.json();
-    })
-    .then(function(response){
-        console.log(response);
-    })
-});*/
+
 
 
 module.exports = router;
